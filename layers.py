@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-class gaborFilterLayer:
+class GaborFilterLayer:
     
     def __init__(self,image_path, size, sigma, lamda, gamma, psi):
         self.image_path=image_path
@@ -26,7 +26,7 @@ class gaborFilterLayer:
 
         return gabor_filtered_images
 
-class poolingLayer:
+class PoolingLayer:
     
     def __init__(self,pooling_size):
             self.pooling_size=pooling_size
@@ -49,12 +49,27 @@ class poolingLayer:
                                         #  print(gabor_filtered_Layer[index][i+k][j+l],end=" ")
                         
                         row.append(max)
+                        pooling_filtered_images.append([index,int(i/self.pooling_size),int(j/self.pooling_size),max])        
+
                 pooled_matrix.append(row)
-                        #  pooling_filtered_images.append((i/pooling_size,j/pooling_size,max))        
-            pooling_filtered_images.append(pooled_matrix)
+            # pooling_filtered_images.append(pooled_matrix)
             cv2.imwrite("./output/pooling/{}.png".format(index), np.array(pooled_matrix) )
             index +=1
             
-        return pooling_filtered_images
+        return sorted(pooling_filtered_images,key=lambda x:x[3],reverse=True)
+
+    def sort_pooling_filtered_images(self,pooling_filtered_images):
+        return sorted(pooling_filtered_images,key=lambda x:x[3],reverse=True)
+
+
+class ComplexLayer:
+    def __init__(self,feature_num):
+        self.feature_num=feature_num
+        self.feature_list=[]
+    def make_neurons(self):
+        feature_list=[]
         
+
+
+
                 
