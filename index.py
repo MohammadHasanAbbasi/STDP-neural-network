@@ -6,5 +6,9 @@ from layers import gaborFilterLayer
 gb=gaborFilterLayer('./photo.jpg',(31,31),9,15,0.5,0)
 gaborLayer=gb.make_filters(15)
 
+print(np.amax(gaborLayer[5]) )
+
 
 # pooling layer 
+
+

@@ -26,4 +26,35 @@ class gaborFilterLayer:
 
         return gabor_filtered_images
 
-
+class poolingLayer:
+    
+    def __init__(self,pooling_size):
+            self.pooling_size=pooling_size
+       
+    
+    def make_filter(self, gabor_filtered_Layer):
+        
+        pooling_filtered_images=[]
+        index=0
+        for gabor_matrix in gabor_filtered_Layer:
+            pooled_matrix=[]
+            for i in range(0,len(gabor_matrix),self.pooling_size):
+                row=[]
+                for j in range(0,len(gabor_matrix),self.pooling_size):
+                        max=-100
+                        for k in range(0,self.pooling_size):
+                                for l in range(0,self.pooling_size):
+                                        if max <gabor_matrix[i+k][j+l]:
+                                                max=gabor_matrix[i+k][j+l]
+                                        #  print(gabor_filtered_Layer[index][i+k][j+l],end=" ")
+                        
+                        row.append(max)
+                pooled_matrix.append(row)
+                        #  pooling_filtered_images.append((i/pooling_size,j/pooling_size,max))        
+            pooling_filtered_images.append(pooled_matrix)
+            cv2.imwrite("./output/pooling/{}.png".format(index), np.array(pooled_matrix) )
+            index +=1
+            
+        return pooling_filtered_images
+        
+                
